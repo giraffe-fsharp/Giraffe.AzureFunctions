@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Run.fs" />
+    <None Include="function.json" CopyToOutputDirectory="Always" />
+    <None Include="index.htm" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Giraffe.AzureFunctions.fsproj" />
+  </ItemGroup>
+</Project>
