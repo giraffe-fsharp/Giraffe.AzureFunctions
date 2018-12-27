@@ -3,11 +3,16 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Run.fs" />
-    <None Include="function.json" CopyToOutputDirectory="Always" />
+    <Compile Include="*.fs" />
     <None Include="index.htm" CopyToOutputDirectory="Always" />
+    <None Include="Templates/*" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Giraffe.AzureFunctions.fsproj" />
+    <PackageReference Include="Giraffe.DotLiquid" Version="1.2.0" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions" Version="3.0.1" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.24" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\startup\Startup.fsproj" />
   </ItemGroup>
 </Project>

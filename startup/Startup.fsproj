@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="*.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Giraffe" Version="3.4.0" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.3" />
+  </ItemGroup>
+</Project>
