@@ -35,5 +35,6 @@ let run ([<HttpTrigger (AuthorizationLevel.Anonymous, Route = "{*any}")>] req : 
   let func = Some >> Task.FromResult
   task {
     let! _ = app func req.HttpContext
+    do req.HttpContext.Response.Body.Flush() //workaround https://github.com/giraffe-fsharp/Giraffe.AzureFunctions/issues/1
     return ()
   } :> Task
