@@ -38,6 +38,8 @@ let app : HttpHandler =
 
     GET >=> route "/api/demo/failing" >=> warbler (fun _ -> failwith "FAILURE")
 
+    RequestErrors.NOT_FOUND "Not Found"
+
   ]
 
 let errorHandler (ex : exn) (logger : ILogger) =
