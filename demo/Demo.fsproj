@@ -8,6 +8,13 @@
     <Compile Include="Startup.fs" />
     <None Include="index.htm" CopyToOutputDirectory="Always" />
     <None Include="Templates/*" CopyToOutputDirectory="Always" />
+    <Content Include="host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="local.settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
