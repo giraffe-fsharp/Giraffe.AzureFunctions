@@ -1,12 +1,12 @@
 module Startup
 
-open Microsoft.Azure.WebJobs
-open Microsoft.Azure.WebJobs.Hosting
+open Microsoft.Azure.Functions.Extensions.DependencyInjection
 open Giraffe
 
-type WebJobsExtensionStartup() =
-  interface IWebJobsStartup with
-    member __.Configure (builder : IWebJobsBuilder) =
-      builder.Services.AddGiraffe() |> ignore
+type WebJobsExtensionStartup () =
+   inherit FunctionsStartup ()
+   override __.Configure(builder: IFunctionsHostBuilder) =
+       builder.Services.AddGiraffe() |> ignore
 
-[<assembly: WebJobsStartup(typeof<WebJobsExtensionStartup>)>] do()
+[<assembly: FunctionsStartup(typeof<WebJobsExtensionStartup>)>]
+do ()
