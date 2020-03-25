@@ -33,8 +33,6 @@ let run ([<HttpTrigger (AuthorizationLevel.Anonymous, Route = "{*any}")>] req : 
   let hostingEnvironment = req.HttpContext.GetHostingEnvironment()
   hostingEnvironment.ContentRootPath <- context.FunctionAppDirectory
   let func = Some >> Task.FromResult
-  task {
-    let! _ = app func req.HttpContext
-    do! req.HttpContext.Response.Body.FlushAsync() //workaround https://github.com/giraffe-fsharp/Giraffe.AzureFunctions/issues/1
-    return Microsoft.AspNetCore.Mvc.EmptyResult()
-  }
+  { new Microsoft.AspNetCore.Mvc.IActionResult with
+      member _.ExecuteResultAsync(ctx) = 
+        app func ctx.HttpContext :> Task }
