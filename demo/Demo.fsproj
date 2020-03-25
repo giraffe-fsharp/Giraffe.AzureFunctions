@@ -4,12 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="*.fs" />
+    <Compile Include="Run.fs" />
+    <Compile Include="Startup.fs" />
     <None Include="index.htm" CopyToOutputDirectory="Always" />
     <None Include="Templates/*" CopyToOutputDirectory="Always" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\startup\Startup.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

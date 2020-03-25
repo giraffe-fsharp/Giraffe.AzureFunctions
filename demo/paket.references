@@ -1,2 +1,3 @@
 Giraffe.DotLiquid
 Microsoft.NET.Sdk.Functions
+Microsoft.Azure.Functions.Extensions
