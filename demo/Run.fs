@@ -16,6 +16,14 @@ type Person =
 
 let fooBar = { FirstName = "Foo"; LastName = "Bar" }
 
+let loggingHandler: HttpHandler =
+  fun next ctx -> task {
+    let logger = ctx.GetLogger()
+    use _ = logger.BeginScope(dict ["foo", "bar"])
+    logger.LogInformation("Logging {Level}", "Information")
+    return! Successful.OK "ok" next ctx
+  }
+
 let app : HttpHandler =
 
   choose [
@@ -25,6 +33,8 @@ let app : HttpHandler =
     GET >=> route "/api/demo/foo" >=> negotiate fooBar
 
     GET >=> route "/api/demo/person" >=> dotLiquidTemplate "text/html" "Templates/Person.liquid" fooBar
+
+    GET >=> route "/api/demo/logging" >=> loggingHandler
 
     GET >=> route "/api/demo/failing" >=> warbler (fun _ -> failwith "FAILURE")
 
