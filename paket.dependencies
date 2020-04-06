@@ -3,4 +3,5 @@ source https://api.nuget.org/v3/index.json
 storage: none
 framework: netcoreapp3.1
 nuget Giraffe.DotLiquid
+nuget Microsoft.Azure.Functions.Extensions
 nuget Microsoft.NET.Sdk.Functions

@@ -4,12 +4,17 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="*.fs" />
+    <Compile Include="Run.fs" />
+    <Compile Include="Startup.fs" />
     <None Include="index.htm" CopyToOutputDirectory="Always" />
     <None Include="Templates/*" CopyToOutputDirectory="Always" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\startup\Startup.fsproj" />
+    <Content Include="host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="local.settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

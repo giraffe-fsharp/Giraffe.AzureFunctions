@@ -16,6 +16,14 @@ type Person =
 
 let fooBar = { FirstName = "Foo"; LastName = "Bar" }
 
+let loggingHandler: HttpHandler =
+  fun next ctx -> task {
+    let logger = ctx.GetLogger()
+    use _ = logger.BeginScope(dict ["foo", "bar"])
+    logger.LogInformation("Logging {Level}", "Information")
+    return! Successful.OK "ok" next ctx
+  }
+
 let app : HttpHandler =
 
   choose [
@@ -26,14 +34,30 @@ let app : HttpHandler =
 
     GET >=> route "/api/demo/person" >=> dotLiquidTemplate "text/html" "Templates/Person.liquid" fooBar
 
+    GET >=> route "/api/demo/logging" >=> loggingHandler
+
+    GET >=> route "/api/demo/failing" >=> warbler (fun _ -> failwith "FAILURE")
+
+    RequestErrors.NOT_FOUND "Not Found"
+
   ]
+
+let errorHandler (ex : exn) (logger : ILogger) =
+    logger.LogError(EventId(), ex, "An unhandled exception has occurred while executing the request.")
+    clearResponse
+    >=> ServerErrors.INTERNAL_ERROR ex.Message
 
 [<FunctionName "Giraffe">]
 let run ([<HttpTrigger (AuthorizationLevel.Anonymous, Route = "{*any}")>] req : HttpRequest, context : ExecutionContext, log : ILogger) =
   let hostingEnvironment = req.HttpContext.GetHostingEnvironment()
   hostingEnvironment.ContentRootPath <- context.FunctionAppDirectory
   let func = Some >> Task.FromResult
-  task {
-    let! _ = app func req.HttpContext
-    req.HttpContext.Response.Body.Flush() //workaround https://github.com/giraffe-fsharp/Giraffe.AzureFunctions/issues/1
-  } :> Task
+  { new Microsoft.AspNetCore.Mvc.IActionResult with
+      member _.ExecuteResultAsync(ctx) = 
+        task {
+          try
+            return! app func ctx.HttpContext :> Task
+          with exn ->
+            return! errorHandler exn log func ctx.HttpContext :> Task
+        }
+        :> Task }
