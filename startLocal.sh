@@ -1,4 +1,4 @@
 set -e
-pushd build
+pushd demo
 func start
 popd
