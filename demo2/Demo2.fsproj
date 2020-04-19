@@ -1,15 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AzureFunctionsVersion>v3</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Run.fs" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.*" />
+    <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.0.*" />
+    <PackageReference Include="Giraffe" Version="4.1.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models.fs" />
+    <Compile Include="Views.fs" />
+    <Compile Include="HttpHandlers.fs" />
+    <Compile Include="WebApp.fs" />
+    <Compile Include="Function.fs" />
     <Compile Include="Startup.fs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="index.htm" CopyToOutputDirectory="Always" />
-    <None Include="Templates/*" CopyToOutputDirectory="Always" />
     <Content Include="host.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -18,5 +25,4 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
-  <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
