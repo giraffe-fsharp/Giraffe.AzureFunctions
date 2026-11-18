@@ -1,7 +1,14 @@
 source https://api.nuget.org/v3/index.json
 
 storage: none
-framework: netcoreapp3.1
-nuget Giraffe.DotLiquid
-nuget Microsoft.Azure.Functions.Extensions
-nuget Microsoft.NET.Sdk.Functions
+strategy: min
+framework: net8.0
+nuget FSharp.Core 8.0.403
+nuget Giraffe 8.3.0
+nuget Giraffe.ViewEngine 2.0.0-alpha-1
+nuget Giraffe.DotLiquid 3.0.0-rc-1
+nuget Microsoft.Azure.Functions.Worker 2.52.0
+nuget Microsoft.Azure.Functions.Worker.Sdk 2.0.7
+nuget Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore 2.1.1
+nuget Microsoft.Extensions.Hosting 10.0.10
+nuget System.Text.Json 10.0.10

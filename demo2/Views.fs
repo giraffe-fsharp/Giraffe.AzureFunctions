@@ -2,7 +2,7 @@ namespace Demo2
 
 [<RequireQualifiedAccess>]
 module Views =
-    open Giraffe.GiraffeViewEngine
+    open Giraffe.ViewEngine
 
     let private metaCharset (value : string) =
         meta [ attr "charset" value ]

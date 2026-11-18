@@ -1,20 +1,16 @@
 namespace Demo2
 
 module Function =
-    open Microsoft.Azure.WebJobs
-    open Microsoft.Azure.WebJobs.Extensions.Http
+    open Microsoft.Azure.Functions.Worker
     open Microsoft.AspNetCore.Http
     open Microsoft.Extensions.Logging
     open System.Threading.Tasks
-    open FSharp.Control.Tasks.V2
     open Giraffe
 
-    [<FunctionName "Giraffe">]
+    [<Function "Giraffe">]
     let run ([<HttpTrigger (AuthorizationLevel.Anonymous, Route = "{*any}")>]
-        req : HttpRequest, ectx : ExecutionContext, log : ILogger) =
-
-        let env = req.HttpContext.GetHostingEnvironment()
-        env.ContentRootPath <- ectx.FunctionAppDirectory
+        req : HttpRequest) =
+        let log = req.HttpContext.GetLogger()
 
         let func = Some >> Task.FromResult
 

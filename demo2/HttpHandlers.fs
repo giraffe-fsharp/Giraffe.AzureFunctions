@@ -4,7 +4,6 @@ namespace Demo2
 module HttpHandlers =
     open Microsoft.AspNetCore.Http
     open Giraffe
-    open FSharp.Control.Tasks.V2.ContextInsensitive
 
     let index : HttpHandler =
         Views.index
