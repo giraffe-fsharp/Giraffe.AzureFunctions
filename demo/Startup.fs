@@ -1,12 +1,14 @@
 module Startup
 
-open Microsoft.Azure.Functions.Extensions.DependencyInjection
 open Giraffe
+open Microsoft.Extensions.Hosting
 
-type WebJobsExtensionStartup () =
-  inherit FunctionsStartup ()
-  override __.Configure(builder: IFunctionsHostBuilder) =
-    builder.Services.AddGiraffe() |> ignore
-
-[<assembly: FunctionsStartup(typeof<WebJobsExtensionStartup>)>]
-do ()
+[<EntryPoint>]
+let main _ =
+    let host =
+        HostBuilder()
+            .ConfigureFunctionsWebApplication()
+            .ConfigureServices(fun services -> services.AddGiraffe() |> ignore)
+            .Build()
+    host.Run()
+    0

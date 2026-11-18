@@ -1,3 +1,7 @@
 Giraffe.DotLiquid
-Microsoft.NET.Sdk.Functions
-Microsoft.Azure.Functions.Extensions
+Giraffe
+Giraffe.ViewEngine
+FSharp.Core
+Microsoft.Azure.Functions.Worker
+Microsoft.Azure.Functions.Worker.Sdk
+Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore

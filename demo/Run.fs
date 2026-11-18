@@ -2,10 +2,8 @@ module Run
 
 open Giraffe
 open Microsoft.AspNetCore.Http
-open Microsoft.Azure.WebJobs
-open Microsoft.Azure.WebJobs.Extensions.Http
+open Microsoft.Azure.Functions.Worker
 open System.Threading.Tasks
-open FSharp.Control.Tasks.V2
 open Giraffe.DotLiquid
 open Microsoft.Extensions.Logging
 
@@ -32,7 +30,7 @@ let app : HttpHandler =
 
     GET >=> route "/api/demo/foo" >=> negotiate fooBar
 
-    GET >=> route "/api/demo/person" >=> dotLiquidTemplate "text/html" "Templates/Person.liquid" fooBar
+    GET >=> route "/api/demo/person" >=> dotLiquidTemplate "text/html" "Templates/person.liquid" fooBar
 
     GET >=> route "/api/demo/logging" >=> loggingHandler
 
@@ -47,13 +45,12 @@ let errorHandler (ex : exn) (logger : ILogger) =
     clearResponse
     >=> ServerErrors.INTERNAL_ERROR ex.Message
 
-[<FunctionName "Giraffe">]
-let run ([<HttpTrigger (AuthorizationLevel.Anonymous, Route = "{*any}")>] req : HttpRequest, context : ExecutionContext, log : ILogger) =
-  let hostingEnvironment = req.HttpContext.GetHostingEnvironment()
-  hostingEnvironment.ContentRootPath <- context.FunctionAppDirectory
+[<Function "Giraffe">]
+let run ([<HttpTrigger (AuthorizationLevel.Anonymous, Route = "{*any}")>] req : HttpRequest) =
+  let log = req.HttpContext.GetLogger()
   let func = Some >> Task.FromResult
   { new Microsoft.AspNetCore.Mvc.IActionResult with
-      member _.ExecuteResultAsync(ctx) = 
+      member _.ExecuteResultAsync(ctx) =
         task {
           try
             return! app func ctx.HttpContext :> Task
